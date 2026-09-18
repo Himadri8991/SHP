@@ -1,0 +1,423 @@
+@import "tailwindcss";
+
+/* ============================================================
+   SKY-HIGH PROPERTIES — ARCHITECTURAL DESIGN SYSTEM
+   ============================================================ */
+
+:root {
+  /* --- Stone & Architectural Materials (from photography) --- */
+  --color-stone-50: #FAFAF8;
+  --color-stone-100: #F4F1EA;
+  --color-stone-200: #E6E1D5;
+  --color-stone-300: #D2CBB9;
+  --color-stone-400: #ADA48F;
+  --color-stone-500: #8C826B;
+  --color-stone-600: #6B624E;
+  --color-stone-700: #4A4334;
+  --color-stone-800: #2C281F;
+  --color-stone-900: #181611;
+  --color-stone-950: #0C0B08;
+
+  /* --- Deep Navy (from Brand Identity) --- */
+  --color-navy-800: #132356;
+  --color-navy-900: #0D1F5C;
+  --color-navy-950: #071033;
+
+  /* --- Restrained Architectural Gold (from Logo) --- */
+  --color-gold-200: #EAD8A0;
+  --color-gold-300: #DCBF68;
+  --color-gold-400: #C9A227;
+  --color-gold-500: #A88316;
+
+  /* --- Semantic Surfaces --- */
+  --surface-canvas: var(--color-stone-50);
+  --surface-canvas-alt: var(--color-stone-100);
+  --surface-page: var(--surface-canvas);
+  --surface-section-alt: var(--surface-canvas-alt);
+  --surface-dark: #0D0C09;
+  --surface-dark-card: #15130F;
+  --surface-navy: var(--color-navy-900);
+
+  /* --- Text Tokens --- */
+  --text-primary: var(--color-stone-900);
+  --text-secondary: var(--color-stone-600);
+  --text-muted: var(--color-stone-500);
+  --text-inverse: #FFFFFF;
+  --text-inverse-muted: rgba(255, 255, 255, 0.65);
+
+  /* --- Nav Height --- */
+  --nav-height: 5rem;
+}
+
+.pt-nav {
+  padding-top: var(--nav-height);
+}
+
+/* ============================================================
+   BASE RESET
+   ============================================================ */
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--surface-canvas);
+  color: var(--text-primary);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   CONTAINER & LAYOUT
+   ============================================================ */
+
+.container-wide {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: clamp(1.5rem, 5vw, 4.5rem);
+}
+
+.container-narrow {
+  width: 100%;
+  max-width: 1080px;
+  margin-inline: auto;
+  padding-inline: clamp(1.5rem, 5vw, 4.5rem);
+}
+
+/* ============================================================
+   ARCHITECTURAL TYPOGRAPHY SYSTEM
+   ============================================================ */
+
+.font-editorial {
+  font-family: var(--font-playfair), Georgia, serif;
+}
+
+.text-hero {
+  font-size: clamp(2.5rem, 5.5vw, 5.25rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  font-weight: 400;
+}
+
+.text-section-title {
+  font-size: clamp(2rem, 3.75vw, 3.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  font-weight: 400;
+}
+
+.text-chapter-title {
+  font-size: clamp(1.65rem, 2.5vw, 2.5rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+}
+
+.text-subhead {
+  font-size: clamp(1.05rem, 1.35vw, 1.25rem);
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+}
+
+.text-eyebrow {
+  font-size: 0.6875rem;
+  line-height: 1;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.text-meta-caps {
+  font-size: 0.75rem;
+  line-height: 1.3;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.text-section {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: clamp(1.85rem, 3.5vw, 3.25rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+}
+
+.text-body {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  font-weight: 300;
+}
+
+.text-body-lg {
+  font-size: 1.125rem;
+  line-height: 1.65;
+  color: var(--text-primary);
+  font-weight: 300;
+}
+
+.text-label {
+  font-size: 0.75rem;
+  line-height: 1.2;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.text-meta {
+  font-size: 0.6875rem;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* ============================================================
+   EDITORIAL INTERACTION LANGUAGE (SUBTLE ARCHITECTURAL CRAFT)
+   ============================================================ */
+
+/* Primary Editorial Link (Text + Moving Directional Arrow) */
+.editorial-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--color-stone-900);
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 3px;
+  transition: color 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.editorial-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0.35);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.editorial-link:hover::after {
+  transform: scaleX(1);
+}
+
+.editorial-link-light {
+  color: #FFFFFF;
+}
+
+.editorial-link-gold {
+  color: var(--color-gold-300);
+}
+
+/* Refined Architectural Action (Hairline Border with Gentle Bevel & Calm Fill) */
+.btn-editorial {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.75rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #FFFFFF;
+  background-color: transparent;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-editorial:hover {
+  border-color: #FFFFFF;
+  background-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  transform: translateY(-1px);
+}
+
+.btn-editorial:active {
+  transform: translateY(0);
+}
+
+.btn-editorial-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.75rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  border-radius: 3px;
+  border: 1px solid var(--color-stone-300);
+  color: var(--color-stone-900);
+  background-color: transparent;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-editorial-dark:hover {
+  border-color: var(--color-stone-900);
+  background-color: var(--color-stone-900);
+  color: var(--color-stone-50);
+  box-shadow: 0 6px 20px rgba(24, 22, 17, 0.15);
+  transform: translateY(-1px);
+}
+
+.btn-editorial-dark:active {
+  transform: translateY(0);
+}
+
+/* Restrained Primary Conversion Button */
+.btn-editorial-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.875rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-radius: 3px;
+  background-color: var(--color-gold-400);
+  color: var(--color-navy-950);
+  border: 1px solid var(--color-gold-400);
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-editorial-gold:hover {
+  background-color: var(--color-gold-300);
+  border-color: var(--color-gold-300);
+  box-shadow: 0 6px 24px rgba(201, 162, 39, 0.28);
+  transform: translateY(-1px);
+}
+
+.btn-editorial-gold:active {
+  transform: translateY(0);
+}
+
+/* Gold Outline Button */
+.btn-editorial-outline-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.75rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  border-radius: 3px;
+  border: 1px solid var(--color-gold-400);
+  color: var(--color-gold-300);
+  background-color: transparent;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-editorial-outline-gold:hover {
+  background-color: var(--color-gold-400);
+  color: var(--color-navy-950);
+  box-shadow: 0 6px 22px rgba(201, 162, 39, 0.25);
+  transform: translateY(-1px);
+}
+
+.btn-editorial-outline-gold:active {
+  transform: translateY(0);
+}
+
+/* ============================================================
+   ACCESSIBILITY & FOCUS
+   ============================================================ */
+
+:focus-visible {
+  outline: 2px solid var(--color-gold-400);
+  outline-offset: 3px;
+}
+
+::selection {
+  background-color: var(--color-gold-200);
+  color: var(--color-stone-900);
+}
+
+/* ============================================================
+   MEDIA UTILITIES
+   ============================================================ */
+
+.video-cover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Architectural frame styling */
+.arch-frame {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-stone-200);
+}
+
+.arch-frame img,
+.arch-frame video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.arch-frame:hover img,
+.arch-frame:hover video {
+  transform: scale(1.025);
+}
+
+/* Hairline borders */
+.border-hairline {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.border-hairline-dark {
+  border-color: var(--color-stone-200);
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

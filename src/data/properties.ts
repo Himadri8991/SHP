@@ -1,0 +1,311 @@
+/**
+ * PROPERTY DATA — Sky-High Properties
+ *
+ * Premier developer developments, verified resale residences, luxury rentals, and land plots in Kolkata.
+ */
+
+export type PropertyType = "apartment" | "penthouse" | "plot" | "commercial";
+export type PropertyStatus = "available" | "sold" | "under-construction" | "ready-to-move";
+export type PropertyPurpose = "buy" | "rent";
+export type PropertyCategory = "new-project" | "resale" | "rent" | "land-plot";
+
+export const TOP_DEVELOPERS = [
+  "Srijan",
+  "PS Group",
+  "Godrej Properties",
+  "Shapoorji Pallonji",
+  "Eden Realty",
+  "Vinayak Group",
+  "DTC Group",
+] as const;
+
+export interface PropertyListing {
+  /** Unique ID for routing */
+  id: string;
+  /** Full property/project name */
+  title: string;
+  /** Developer partner if applicable */
+  developer?: string;
+  /** Property type */
+  type: PropertyType;
+  /** Category for dedicated routes */
+  category: PropertyCategory;
+  /** Buy or rent */
+  purpose: PropertyPurpose;
+  /** Current availability status */
+  status: PropertyStatus;
+  /** Area/locality */
+  location: string;
+  /** Price display string */
+  price: string | null;
+  /** Bedrooms — null for plots/commercial */
+  bedrooms: number | null;
+  /** Bathrooms — null for plots */
+  bathrooms: number | null;
+  /** Carpet/built-up area in sq.ft */
+  areaSqft: number | null;
+  /** Short description */
+  description: string;
+  /** Primary image path */
+  imageSrc: string;
+  /** Alt text for primary image */
+  imageAlt: string;
+  /** URL-safe slug for the property detail page */
+  slug: string;
+  /** Highlight amenities */
+  highlights: string[];
+}
+
+export const PROPERTY_LISTINGS: PropertyListing[] = [
+  {
+    id: "sh-001",
+    title: "PS One10 — Signature Tower",
+    developer: "PS Group",
+    type: "apartment",
+    category: "new-project",
+    purpose: "buy",
+    status: "under-construction",
+    location: "Newtown, Action Area I",
+    price: "₹ 1.45 Cr",
+    bedrooms: 3,
+    bathrooms: 3,
+    areaSqft: 1850,
+    description:
+      "Exclusive high-rise luxury residence by PS Group designed for modern living. Features panoramic city vistas, international-grade clubhouse amenities, Olympic-length pool, and landscaped green zones.",
+    imageSrc: "/assets/sky-high/homepage/images/01-exterior-master.webp",
+    imageAlt: "PS One10 luxury apartment in Action Area I, Newtown",
+    slug: "ps-one10-signature-tower-newtown",
+    highlights: ["PS Group Flagship", "Olympic Pool", "Walk to IT Corridor", "Clubhouse & Sports"],
+  },
+  {
+    id: "sh-002",
+    title: "Srijan Solus — High-Rise Living",
+    developer: "Srijan",
+    type: "apartment",
+    category: "new-project",
+    purpose: "buy",
+    status: "under-construction",
+    location: "Newtown, Action Area II",
+    price: "₹ 1.20 Cr",
+    bedrooms: 3,
+    bathrooms: 3,
+    areaSqft: 1650,
+    description:
+      "Iconic multi-tower residential landmark by Srijan Realty. Offering spacious 3-side open residences overlooking Eco Park, state-of-the-art multi-tier security, and ultra-modern lifestyle amenities.",
+    imageSrc: "/assets/sky-high/homepage/images/03-terrace-view-master.webp",
+    imageAlt: "Srijan Solus high-rise apartments in Newtown",
+    slug: "panoramic-penthouse-newtown-aa2",
+    highlights: ["Srijan Masterpiece", "Eco Park Horizons", "Double Car Park", "Smart Security"],
+  },
+  {
+    id: "sh-003",
+    title: "Godrej Prakriti — Skyline Residence",
+    developer: "Godrej Properties",
+    type: "apartment",
+    category: "new-project",
+    purpose: "buy",
+    status: "ready-to-move",
+    location: "BT Road Corridor, Kolkata",
+    price: "₹ 85 Lakh",
+    bedrooms: 3,
+    bathrooms: 2,
+    areaSqft: 1420,
+    description:
+      "Serene landscaped gated township by Godrej Properties. Spread across lush green acres with private natural lake, commercial high street, and seamless arterial connectivity.",
+    imageSrc: "/assets/sky-high/homepage/images/02-living-room-master.webp",
+    imageAlt: "Godrej Prakriti luxury apartments in Kolkata",
+    slug: "living-pavilion-apartment-aa1",
+    highlights: ["Godrej Green Township", "Private Lake", "100% Power Backup", "Retail High-Street"],
+  },
+  {
+    id: "sh-004",
+    title: "Eden Richmond Park — Resale Flat",
+    developer: "Eden Realty",
+    type: "apartment",
+    category: "resale",
+    purpose: "buy",
+    status: "ready-to-move",
+    location: "Rajarhat Expressway",
+    price: "₹ 72 Lakh",
+    bedrooms: 3,
+    bathrooms: 2,
+    areaSqft: 1350,
+    description:
+      "Impeccably maintained ready-to-move 3BHK resale flat by Eden Realty. Features corner positioning, morning eastern sunlight, reserved covered parking, and 10 minutes to Kolkata Airport.",
+    imageSrc: "/assets/sky-high/homepage/images/04-master-bedroom-master.webp",
+    imageAlt: "Eden Richmond Park resale flat along Rajarhat corridor",
+    slug: "garden-residence-rajarhat",
+    highlights: ["Ready to Move", "Immediate Registry", "Airport Proximity", "Covered Parking"],
+  },
+  {
+    id: "sh-005",
+    title: "Shapoorji Pallonji Joyville — Enclave",
+    developer: "Shapoorji Pallonji",
+    type: "apartment",
+    category: "new-project",
+    purpose: "buy",
+    status: "under-construction",
+    location: "Newtown, Action Area III",
+    price: "₹ 95 Lakh",
+    bedrooms: 3,
+    bathrooms: 2,
+    areaSqft: 1480,
+    description:
+      "Thoughtfully engineered residential enclave from the legacy Shapoorji Pallonji group. Features biometric digital door locks, expansive clubhouse, and 75% landscaped open spaces.",
+    imageSrc: "/assets/sky-high/homepage/images/05-evening-exterior-master.webp",
+    imageAlt: "Shapoorji Pallonji Joyville apartment in Action Area III, Newtown",
+    slug: "shapoorji-joyville-aa3",
+    highlights: ["Legacy Engineering", "75% Open Greenery", "Smart Home Tech", "Club Joyville"],
+  },
+  {
+    id: "sh-006",
+    title: "Vinayak Golden Acres — Executive Lease",
+    developer: "Vinayak Group",
+    type: "apartment",
+    category: "rent",
+    purpose: "rent",
+    status: "available",
+    location: "Newtown, Action Area I",
+    price: "₹ 52,000 / mo",
+    bedrooms: 3,
+    bathrooms: 3,
+    areaSqft: 1720,
+    description:
+      "Fully furnished premium corporate high-rise apartment by Vinayak Group, moments from Newtown's premier IT and commercial corridors. Includes imported furnishings and covered parking.",
+    imageSrc: "/assets/sky-high/homepage/images/02-living-room-master.webp",
+    imageAlt: "Vinayak Golden Acres corporate lease apartment in Newtown",
+    slug: "executive-high-rise-lease-aa1",
+    highlights: ["Fully Furnished", "Walk to IT Campus", "Reserved Basement Park", "Active Gym & Pool"],
+  },
+  {
+    id: "sh-007",
+    title: "DTC Southern Heights — Resale Apartment",
+    developer: "DTC Group",
+    type: "apartment",
+    category: "resale",
+    purpose: "buy",
+    status: "ready-to-move",
+    location: "Joka / Diamond Harbour Corridor",
+    price: "₹ 58 Lakh",
+    bedrooms: 2,
+    bathrooms: 2,
+    areaSqft: 1100,
+    description:
+      "Well-appointed 2BHK resale home in DTC Group's acclaimed gated township. Clean municipal title, bank mutation complete, and ready for immediate possession and registration.",
+    imageSrc: "/assets/sky-high/homepage/images/03-terrace-view-master.webp",
+    imageAlt: "DTC Southern Heights resale flat in Kolkata",
+    slug: "dtc-southern-heights-resale-joka",
+    highlights: ["Direct Owner Resale", "Metro Proximity", "Complete Mutation", "Immediate Keys"],
+  },
+  {
+    id: "sh-008",
+    title: "Prime Corner Commercial & Retail Plot",
+    type: "plot",
+    category: "land-plot",
+    purpose: "buy",
+    status: "available",
+    location: "Rajarhat Expressway",
+    price: "₹ 3.20 Cr",
+    bedrooms: null,
+    bathrooms: null,
+    areaSqft: 5760, // 8 Cottahs
+    description:
+      "High-visibility freehold commercial land parcel directly accessible from the 6-lane Rajarhat main expressway. Ideal for commercial corporate offices, diagnostic healthcare centers, or retail ventures.",
+    imageSrc: "/assets/sky-high/homepage/images/01-exterior-master.webp",
+    imageAlt: "Commercial plot along Rajarhat expressway",
+    slug: "commercial-land-rajarhat",
+    highlights: ["6-Lane Road Facing", "Commercial Sanction", "Freehold Ownership", "Immediate Registry"],
+  },
+  {
+    id: "sh-009",
+    title: "PS Aurus — Luxury Sky Suite",
+    developer: "PS Group",
+    type: "penthouse",
+    category: "rent",
+    purpose: "rent",
+    status: "available",
+    location: "EM Bypass, Kolkata",
+    price: "₹ 90,000 / mo",
+    bedrooms: 4,
+    bathrooms: 4,
+    areaSqft: 2800,
+    description:
+      "Bespoke high-floor designer sky suite at PS Aurus overlooking the Kolkata wetlands and ITC Sonar horizon. Fully air-conditioned with concierge service and private elevator access.",
+    imageSrc: "/assets/sky-high/homepage/images/04-master-bedroom-master.webp",
+    imageAlt: "PS Aurus luxury penthouse for rent on EM Bypass",
+    slug: "corporate-sky-suite-sector-v",
+    highlights: ["EM Bypass Landmark", "Sky Lounge Access", "Concierge Desk", "Private Elevator Access"],
+  },
+  {
+    id: "sh-010",
+    title: "PS Aurus — Ready Resale Residence",
+    developer: "PS Group",
+    type: "apartment",
+    category: "resale",
+    purpose: "buy",
+    status: "ready-to-move",
+    location: "EM Bypass, Kolkata",
+    price: "₹ 1.65 Cr",
+    bedrooms: 3,
+    bathrooms: 3,
+    areaSqft: 1950,
+    description:
+      "Exclusive high-floor resale apartment at PS Aurus overlooking Kolkata wetlands. Features marble flooring, wrap-around viewing balconies, dedicated double car parking, and immediate registration readiness.",
+    imageSrc: "/assets/sky-high/homepage/images/03-terrace-view-master.webp",
+    imageAlt: "PS Aurus luxury resale apartment on EM Bypass",
+    slug: "ps-aurus-resale-em-bypass",
+    highlights: ["Direct Owner Resale", "High-Floor Wetlands View", "Double Car Park", "Ready for Registry"],
+  },
+  {
+    id: "sh-011",
+    title: "Srijan Midlands — Verified Resale Flat",
+    developer: "Srijan",
+    type: "apartment",
+    category: "resale",
+    purpose: "buy",
+    status: "ready-to-move",
+    location: "VIP Road / Jessore Corridor",
+    price: "₹ 68 Lakh",
+    bedrooms: 2,
+    bathrooms: 2,
+    areaSqft: 1180,
+    description:
+      "Charming, sunlit 2BHK resale flat in Srijan Midlands. Complete municipal tax receipts, registered society NOC in hand, and located 15 minutes from Kolkata Airport.",
+    imageSrc: "/assets/sky-high/homepage/images/02-living-room-master.webp",
+    imageAlt: "Srijan Midlands resale flat on VIP Road",
+    slug: "srijan-midlands-resale-kolkata",
+    highlights: ["Clear Bank Title", "Society NOC Ready", "15 Mins to Airport", "Immediate Handover"],
+  },
+];
+export function filterByCategory(listings: PropertyListing[], category: PropertyCategory): PropertyListing[] {
+  return listings.filter((p) => p.category === category);
+}
+
+export function filterByDeveloper(listings: PropertyListing[], developer: string): PropertyListing[] {
+  if (!developer || developer === "all" || developer === "All Developers") return listings;
+  return listings.filter((p) => p.developer?.toLowerCase() === developer.toLowerCase());
+}
+
+export function filterByPurpose(listings: PropertyListing[], purpose: PropertyPurpose): PropertyListing[] {
+  return listings.filter((p) => p.purpose === purpose);
+}
+
+export function filterByType(listings: PropertyListing[], type: PropertyType): PropertyListing[] {
+  return listings.filter((p) => p.type === type);
+}
+
+export function getPropertyBySlug(slug: string, listings?: PropertyListing[]): PropertyListing | undefined;
+export function getPropertyBySlug(listings: PropertyListing[], slug: string): PropertyListing | undefined;
+export function getPropertyBySlug(
+  arg1: string | PropertyListing[],
+  arg2?: string | PropertyListing[]
+): PropertyListing | undefined {
+  if (typeof arg1 === "string") {
+    const listings = Array.isArray(arg2) ? arg2 : PROPERTY_LISTINGS;
+    return listings.find((p) => p.slug === arg1);
+  } else {
+    const slug = typeof arg2 === "string" ? arg2 : "";
+    return arg1.find((p) => p.slug === slug);
+  }
+}
+
