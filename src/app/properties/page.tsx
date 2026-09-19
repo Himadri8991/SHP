@@ -7,9 +7,10 @@ import Link from "next/link";
 import Navigation from "@/components/layout/Navigation";
 import Footer from "@/components/layout/Footer";
 import FloatingWhatsApp from "@/components/ui/FloatingWhatsApp";
-import { PROPERTY_LISTINGS, TOP_DEVELOPERS } from "@/data/properties";
+import { PROPERTY_LISTINGS, TOP_DEVELOPERS, PropertyListing } from "@/data/properties";
 import { SITE_CONFIG } from "@/data/site-config";
 import { Search, MapPin, ArrowRight, Phone, ShieldCheck } from "lucide-react";
+import { fetchLiveProperties } from "@/lib/property-store";
 
 type CategoryFilter = "all" | "new-project" | "resale" | "rent" | "land-plot";
 
@@ -30,6 +31,7 @@ function parsePrice(price?: string | null): number {
 
 function PropertiesCatalogContent() {
   const searchParams = useSearchParams();
+  const [liveListings, setLiveListings] = useState<PropertyListing[]>(PROPERTY_LISTINGS);
   const [selectedCategory, setSelectedCategory] = useState<CategoryFilter>("all");
   const [selectedLocation, setSelectedLocation] = useState<string>("all");
   const [selectedDeveloper, setSelectedDeveloper] = useState<string>("all");
@@ -37,12 +39,20 @@ function PropertiesCatalogContent() {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<"featured" | "price-asc" | "price-desc">("featured");
 
+  useEffect(() => {
+    fetchLiveProperties().then((data) => {
+      if (data && data.length > 0) {
+        setLiveListings(data);
+      }
+    });
+  }, []);
+
   const categories = [
-    { id: "all", label: "All Properties", count: PROPERTY_LISTINGS.length },
-    { id: "new-project", label: "New Projects", count: PROPERTY_LISTINGS.filter(p => p.category === "new-project").length },
-    { id: "resale", label: "Resale", count: PROPERTY_LISTINGS.filter(p => p.category === "resale").length },
-    { id: "rent", label: "Luxury Rent", count: PROPERTY_LISTINGS.filter(p => p.category === "rent").length },
-    { id: "land-plot", label: "Land & Plots", count: PROPERTY_LISTINGS.filter(p => p.category === "land-plot").length },
+    { id: "all", label: "All Properties", count: liveListings.length },
+    { id: "new-project", label: "New Projects", count: liveListings.filter(p => p.category === "new-project").length },
+    { id: "resale", label: "Resale", count: liveListings.filter(p => p.category === "resale").length },
+    { id: "rent", label: "Luxury Rent", count: liveListings.filter(p => p.category === "rent").length },
+    { id: "land-plot", label: "Land & Plots", count: liveListings.filter(p => p.category === "land-plot").length },
   ];
 
   const locations = [
@@ -86,7 +96,7 @@ function PropertiesCatalogContent() {
   }, [searchParams]);
 
   const filteredProperties = useMemo(() => {
-    const filtered = PROPERTY_LISTINGS.filter((prop) => {
+    const filtered = liveListings.filter((prop) => {
       // Category filter
       if (selectedCategory !== "all" && prop.category !== selectedCategory) {
         return false;
@@ -123,7 +133,7 @@ function PropertiesCatalogContent() {
       return [...filtered].sort((a, b) => parsePrice(b.price) - parsePrice(a.price));
     }
     return filtered;
-  }, [selectedCategory, selectedLocation, searchQuery, sortBy]);
+  }, [liveListings, selectedCategory, selectedLocation, selectedDeveloper, selectedBhk, searchQuery, sortBy]);
 
   return (
     <>

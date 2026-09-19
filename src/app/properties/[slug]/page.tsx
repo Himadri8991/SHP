@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import Navigation from "@/components/layout/Navigation";
 import Footer from "@/components/layout/Footer";
 import FloatingWhatsApp from "@/components/ui/FloatingWhatsApp";
-import { PROPERTY_LISTINGS, getPropertyBySlug } from "@/data/properties";
+import { getServerProperties, getPropertyBySlug } from "@/data/properties";
 import { SITE_CONFIG } from "@/data/site-config";
 import { MapPin, ShieldCheck, CheckCircle2 } from "lucide-react";
 import PropertyInquirySidebar from "@/components/properties/PropertyInquirySidebar";
@@ -14,8 +14,10 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
-  return PROPERTY_LISTINGS.map((p) => ({
+  return getServerProperties().map((p) => ({
     slug: p.slug,
   }));
 }

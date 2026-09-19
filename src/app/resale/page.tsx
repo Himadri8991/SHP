@@ -1,14 +1,15 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Navigation from "@/components/layout/Navigation";
 import Footer from "@/components/layout/Footer";
 import FloatingWhatsApp from "@/components/ui/FloatingWhatsApp";
 import ListPropertyModal from "@/components/properties/ListPropertyModal";
-import { PROPERTY_LISTINGS } from "@/data/properties";
+import { PROPERTY_LISTINGS, PropertyListing } from "@/data/properties";
 import { SITE_CONFIG } from "@/data/site-config";
+import { fetchLiveProperties } from "@/lib/property-store";
 import {
   MapPin,
   ArrowRight,
@@ -33,14 +34,21 @@ export default function ResalePage() {
   const [bhkFilter, setBhkFilter] = useState("all");
   const [priceFilter, setPriceFilter] = useState("all");
 
-  // Get all resale listings
-  const allResaleListings = useMemo(() => {
-    return PROPERTY_LISTINGS.filter((p) => p.category === "resale");
+  const [resaleListings, setResaleListings] = useState<PropertyListing[]>(() =>
+    PROPERTY_LISTINGS.filter((p) => p.category === "resale")
+  );
+
+  useEffect(() => {
+    fetchLiveProperties().then((data) => {
+      if (data && data.length > 0) {
+        setResaleListings(data.filter((p) => p.category === "resale"));
+      }
+    });
   }, []);
 
   // Filtered listings based on search, BHK, and price
   const filteredListings = useMemo(() => {
-    return allResaleListings.filter((prop) => {
+    return resaleListings.filter((prop) => {
       // Search query filter (title, location, developer, description)
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase();
@@ -79,7 +87,7 @@ export default function ResalePage() {
 
       return true;
     });
-  }, [allResaleListings, searchQuery, bhkFilter, priceFilter]);
+  }, [resaleListings, searchQuery, bhkFilter, priceFilter]);
 
   const hasActiveFilters = searchQuery.trim() !== "" || bhkFilter !== "all" || priceFilter !== "all";
 

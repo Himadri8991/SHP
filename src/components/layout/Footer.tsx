@@ -113,6 +113,11 @@ export default function Footer() {
                   Terms of Service
                 </Link>
               </li>
+              <li>
+                <Link href="/admin" className="hover:text-[var(--color-gold-300)] transition-colors">
+                  Admin Portal
+                </Link>
+              </li>
             </ul>
           </div>
 

@@ -294,6 +294,24 @@ export function filterByType(listings: PropertyListing[], type: PropertyType): P
   return listings.filter((p) => p.type === type);
 }
 
+export function getServerProperties(): PropertyListing[] {
+  try {
+    if (typeof window === "undefined") {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const fs = require("fs");
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const path = require("path");
+      const filePath = path.join(process.cwd(), "src", "data", "properties-data.json");
+      if (fs.existsSync(filePath)) {
+        return JSON.parse(fs.readFileSync(filePath, "utf8"));
+      }
+    }
+  } catch {
+    // Fallback
+  }
+  return PROPERTY_LISTINGS;
+}
+
 export function getPropertyBySlug(slug: string, listings?: PropertyListing[]): PropertyListing | undefined;
 export function getPropertyBySlug(listings: PropertyListing[], slug: string): PropertyListing | undefined;
 export function getPropertyBySlug(
@@ -301,7 +319,7 @@ export function getPropertyBySlug(
   arg2?: string | PropertyListing[]
 ): PropertyListing | undefined {
   if (typeof arg1 === "string") {
-    const listings = Array.isArray(arg2) ? arg2 : PROPERTY_LISTINGS;
+    const listings = Array.isArray(arg2) ? arg2 : getServerProperties();
     return listings.find((p) => p.slug === arg1);
   } else {
     const slug = typeof arg2 === "string" ? arg2 : "";

@@ -4,6 +4,7 @@ import { Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { SITE_CONFIG } from "@/data/site-config";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
+import OpeningPreloader from "@/components/ui/OpeningPreloader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -75,6 +76,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${playfairDisplay.variable}`}
     >
       <body>
+        <OpeningPreloader />
         <SmoothScrollProvider>
           {children}
         </SmoothScrollProvider>
