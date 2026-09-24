@@ -75,20 +75,6 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${playfairDisplay.variable}`}
     >
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              if (typeof window !== 'undefined') {
-                if ('scrollRestoration' in history) {
-                  history.scrollRestoration = 'manual';
-                }
-                window.scrollTo(0, 0);
-              }
-            `,
-          }}
-        />
-      </head>
       <body>
         <OpeningPreloader />
         <SmoothScrollProvider>

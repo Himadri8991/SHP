@@ -32,6 +32,11 @@ export default function AnimatedCounter({
     const el = elementRef.current;
     if (!el) return;
 
+    if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
+      setDisplayValue(targetRef.current);
+      return;
+    }
+
     const runCountAnimation = (from: number, to: number) => {
       if (animFrameRef.current) {
         cancelAnimationFrame(animFrameRef.current);

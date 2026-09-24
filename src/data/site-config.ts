@@ -105,7 +105,7 @@ export const SITE_CONFIG = {
   testimonials: [
     {
       quote:
-        "Ashish and his team were extremely professional and responsive throughout our property search. Excellent market knowledge and honest guidance. Found us exactly what we were looking for in Action Area 1.",
+        "Skyhigh team were extremely professional and responsive throughout our property search. Excellent market knowledge and honest guidance. Found us exactly what we were looking for in Action Area 1.",
       author: "Saptarshi Mukherjee",
       role: "Engineer, Kolkata",
       verified: true,

@@ -44,8 +44,12 @@ export default function SmoothScrollProvider({
 
     lenisRef.current = lenis;
 
-    // Immediately jump to top of document on load/refresh
-    lenis.scrollTo(0, { immediate: true });
+    // Immediately jump to top of document on load/refresh safely
+    try {
+      lenis.scrollTo(0, { immediate: true });
+    } catch {
+      // Safe fallback
+    }
 
     // Synchronize Lenis scroll updates with GSAP ScrollTrigger
     lenis.on("scroll", ScrollTrigger.update);
