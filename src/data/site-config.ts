@@ -20,14 +20,14 @@ export const SITE_CONFIG = {
 
   /** Official Address */
   address: {
-    shop: "Shop No. 40, 1st Floor",
+    shop: "Shop No. 29, 1st Floor",
     market: "NKDA Community Market",
     block: "AB-Block, Action Area-1",
     area: "Newtown",
     city: "Kolkata",
     state: "West Bengal",
     pin: "700156",
-    full: "Shop No. 40, 1st Floor, NKDA Community Market, AB-Block, Newtown Action Area-1, Kolkata – 700156",
+    full: "Shop No. 29, 1st Floor, NKDA Community Market, AB-Block, Newtown Action Area-1, Kolkata – 700156",
   },
 
   /** Contact Details */

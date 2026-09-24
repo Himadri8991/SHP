@@ -49,6 +49,7 @@ export default function DiscoverySection() {
     { id: "Salt Lake", label: "Salt Lake" },
     { id: "BT Road", label: "BT Road" },
     { id: "Joka", label: "Joka" },
+    { id: "Dum Dum", label: "Dum Dum" },
   ];
 
   const handleSearch = (e: React.FormEvent) => {

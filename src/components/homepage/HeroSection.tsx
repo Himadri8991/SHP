@@ -185,7 +185,7 @@ export default function HeroSection() {
       <div className="relative z-10 container-wide">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-3 sm:pt-4 border-t border-white/15 text-white/60">
           <div className="flex items-center gap-3 text-[10px] sm:text-[11px] tracking-[0.14em] uppercase">
-            <span>Office: Shop No. 40, NKDA Market, Newtown</span>
+            <span>Office: Shop No. 29, NKDA Market, Newtown</span>
             <span className="text-white/30">|</span>
             <span>Verified Listings & Consultancy</span>
           </div>
