@@ -84,7 +84,7 @@ export default function AboutPage() {
                   </div>
                   <div className="border-l-2 border-[var(--color-gold-400)] pl-4 ml-6">
                     <p className="text-2xl font-editorial italic font-normal text-[var(--color-stone-900)]">
-                      100%
+                      96%
                     </p>
                     <p className="text-xs text-[var(--color-stone-500)] uppercase tracking-wider">
                       Client Satisfaction

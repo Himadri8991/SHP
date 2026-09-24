@@ -50,10 +50,10 @@ export const SITE_CONFIG = {
 
   /** Key Business Statistics */
   stats: [
-    { value: "50+", label: "Properties Listed", desc: "Curated residential, commercial & plots" },
+    { value: "100+", label: "Properties Listed", desc: "Curated residential, commercial & plots" },
     { value: "10+", label: "Locations Covered", desc: "Prime corridors across Kolkata & Newtown" },
     { value: "10+", label: "Years of Experience", desc: "Decade of trusted local market advisory" },
-    { value: "100%", label: "Client Satisfaction", desc: "Verified legal titles & transparent guidance" },
+    { value: "96%", label: "Client Satisfaction", desc: "Verified legal titles & transparent guidance" },
   ],
 
   /** Trust Pillars (Why Choose Sky-High) */
