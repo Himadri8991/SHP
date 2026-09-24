@@ -12,7 +12,7 @@ import { SITE_CONFIG } from "@/data/site-config";
 import { Search, MapPin, ArrowRight, Phone, ShieldCheck } from "lucide-react";
 import { fetchLiveProperties } from "@/lib/property-store";
 
-type CategoryFilter = "all" | "new-project" | "resale" | "rent" | "land-plot";
+type CategoryFilter = "all" | "new-project" | "resale" | "rent" | "land-plot" | "commercial";
 
 function parsePrice(price?: string | null): number {
   if (!price) return 0;
@@ -28,6 +28,18 @@ function parsePrice(price?: string | null): number {
   const num = parseFloat(clean);
   return isNaN(num) ? 0 : num;
 }
+
+const LOCATIONS_LIST = [
+  "all",
+  "Newtown",
+  "Rajarhat",
+  "Salt Lake",
+  "Alipore",
+  "Ballygunge",
+  "Dum Dum",
+  "Joka",
+  "EM Bypass",
+];
 
 function PropertiesCatalogContent() {
   const searchParams = useSearchParams();
@@ -53,29 +65,21 @@ function PropertiesCatalogContent() {
     { id: "resale", label: "Resale", count: liveListings.filter(p => p.category === "resale").length },
     { id: "rent", label: "Luxury Rent", count: liveListings.filter(p => p.category === "rent").length },
     { id: "land-plot", label: "Land & Plots", count: liveListings.filter(p => p.category === "land-plot").length },
+    { id: "commercial", label: "Commercial", count: liveListings.filter(p => p.type === "commercial").length },
   ];
 
-  const locations = [
-    "all",
-    "Newtown",
-    "Rajarhat",
-    "EM Bypass",
-    "Ballygunge",
-    "Alipore",
-    "Salt Lake",
-    "BT Road",
-    "Joka",
-  ];
+  const locations = LOCATIONS_LIST;
 
   useEffect(() => {
     const locParam = searchParams.get("location");
     const catParam = searchParams.get("category");
     const devParam = searchParams.get("developer");
     const purposeParam = searchParams.get("purpose");
-    const qParam = searchParams.get("q") || searchParams.get("type");
+    const typeParam = searchParams.get("type");
+    const qParam = searchParams.get("q");
 
     if (locParam) {
-      const match = locations.find(l => l.toLowerCase().includes(locParam.toLowerCase()) || locParam.toLowerCase().includes(l.toLowerCase()));
+      const match = LOCATIONS_LIST.find(l => l.toLowerCase().includes(locParam.toLowerCase()) || locParam.toLowerCase().includes(l.toLowerCase()));
       if (match) setSelectedLocation(match);
     }
 
@@ -84,10 +88,12 @@ function PropertiesCatalogContent() {
       if (match) setSelectedDeveloper(match);
     }
 
-    if (catParam && ["new-project", "resale", "rent", "land-plot"].includes(catParam)) {
+    if (catParam && ["new-project", "resale", "rent", "land-plot", "commercial"].includes(catParam)) {
       setSelectedCategory(catParam as CategoryFilter);
     } else if (purposeParam === "rent") {
       setSelectedCategory("rent");
+    } else if (typeParam === "commercial") {
+      setSelectedCategory("commercial");
     }
 
     if (qParam) {
@@ -98,8 +104,12 @@ function PropertiesCatalogContent() {
   const filteredProperties = useMemo(() => {
     const filtered = liveListings.filter((prop) => {
       // Category filter
-      if (selectedCategory !== "all" && prop.category !== selectedCategory) {
-        return false;
+      if (selectedCategory !== "all") {
+        if (selectedCategory === "commercial") {
+          if (prop.type !== "commercial") return false;
+        } else if (prop.category !== selectedCategory) {
+          return false;
+        }
       }
       // Location filter
       if (selectedLocation !== "all" && !prop.location.toLowerCase().includes(selectedLocation.toLowerCase())) {
@@ -376,7 +386,7 @@ function PropertiesCatalogContent() {
                   <div className="p-6 pt-0 flex items-center justify-between">
                     <div>
                       <p className="text-[10px] uppercase tracking-wider text-[var(--color-stone-400)] font-medium">Pricing</p>
-                      <p className="text-lg font-editorial italic font-normal text-[var(--color-stone-900)]">
+                      <p className="text-lg font-semibold tracking-tight text-[var(--color-navy-900)]">
                         {prop.price || "Contact for Price"}
                       </p>
                     </div>

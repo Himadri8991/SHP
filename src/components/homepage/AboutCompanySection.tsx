@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Search, ShieldCheck, Compass, Handshake, ArrowRight } from "lucide-react";
+import { Search, ShieldCheck, Compass, Handshake } from "lucide-react";
 
 export default function AboutCompanySection() {
   const steps = [

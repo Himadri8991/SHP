@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle2, ArrowRight, Building2, TrendingUp, FileCheck2, PlusCircle } from "lucide-react";
-import { SITE_CONFIG } from "@/data/site-config";
+import { Building2, TrendingUp, FileCheck2 } from "lucide-react";
 import ListPropertyModal from "@/components/properties/ListPropertyModal";
 
 export default function SellPropertySection() {
@@ -25,8 +24,6 @@ export default function SellPropertySection() {
       icon: FileCheck2,
     },
   ];
-
-  const whatsappSellMsg = encodeURIComponent("Hello Sky-High Properties, I would like to consult on selling/reselling my property in Kolkata.");
 
   return (
     <section

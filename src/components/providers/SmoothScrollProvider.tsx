@@ -18,6 +18,14 @@ export default function SmoothScrollProvider({
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
+    // Ensure browser does not remember previous scroll position on refresh
+    if (typeof window !== "undefined") {
+      if ("scrollRestoration" in window.history) {
+        window.history.scrollRestoration = "manual";
+      }
+      window.scrollTo(0, 0);
+    }
+
     if (prefersReducedMotion) {
       return;
     }
@@ -35,6 +43,9 @@ export default function SmoothScrollProvider({
     });
 
     lenisRef.current = lenis;
+
+    // Immediately jump to top of document on load/refresh
+    lenis.scrollTo(0, { immediate: true });
 
     // Synchronize Lenis scroll updates with GSAP ScrollTrigger
     lenis.on("scroll", ScrollTrigger.update);

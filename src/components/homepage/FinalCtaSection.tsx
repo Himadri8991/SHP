@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MessageSquare, PhoneCall } from "lucide-react";
+import { MessageSquare } from "lucide-react";
 import { SITE_CONFIG } from "@/data/site-config";
 
 export default function FinalCtaSection() {

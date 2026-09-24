@@ -47,19 +47,45 @@ cd SHP
 # Install dependencies
 npm install
 
-# Start local development server
+### Development Server
+```bash
+# Start local development server with hot-reload
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to experience the platform.
 
-### Production Build
+### Production Build & Launch
 ```bash
-# Typecheck and build static/dynamic pages
+# Typecheck, optimize, and build all 40 static/dynamic pages
 npm run build
 
-# Start production server
+# Start the high-performance production server
 npm run start
+```
+
+---
+
+## 🪟 Windows PowerShell Troubleshooting
+
+If you see the following error when running `npm` in VS Code or PowerShell:
+```text
+File C:\Program Files\nodejs\npm.ps1 cannot be loaded because running scripts is disabled on this system.
+```
+
+### Fix (One-Time Setup):
+Open PowerShell in VS Code and run:
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned -Force
+```
+*This allows standard scripts for your user account without requiring administrator rights.*
+
+### Quick Alternative:
+You can also run commands using `.cmd` directly:
+```powershell
+npm.cmd run dev
+npm.cmd run build
+npm.cmd run start
 ```
 
 ---

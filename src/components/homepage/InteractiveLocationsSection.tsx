@@ -1,10 +1,13 @@
-﻿"use client";
+"use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin, Navigation, ArrowRight, TrendingUp, Train, CheckCircle2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { HOMEPAGE_IMAGES } from "@/lib/site-assets";
+import { PROPERTY_LISTINGS, PropertyListing } from "@/data/properties";
+import { fetchLiveProperties } from "@/lib/property-store";
+import AnimatedCounter from "@/components/ui/AnimatedCounter";
 
 interface Neighbourhood {
   id: string;
@@ -13,9 +16,9 @@ interface Neighbourhood {
   character: string;
   connectivity: string[];
   propertyTypes: string;
-  listingCount: string;
   imageSrc: string;
   highlights: string[];
+  filterKey: string;
 }
 
 const NEIGHBOURHOODS: Neighbourhood[] = [
@@ -27,9 +30,9 @@ const NEIGHBOURHOODS: Neighbourhood[] = [
       "Kolkata’s premier modern corridor characterized by planned wide boulevards, major IT SEZ campuses, Eco Park greenery, and sanctioned residential enclaves.",
     connectivity: ["Upcoming Orange Line Metro", "15 Mins to International Airport", "Major IT SEZ Hubs"],
     propertyTypes: "Signature High-Rises, Luxury Penthouses & Freehold Plots",
-    listingCount: "41+ Verified Listings",
     imageSrc: HOMEPAGE_IMAGES.exteriorMaster,
     highlights: ["NKDA Municipal Authority", "100% Underground Utilities", "480-Acre Eco Park Lake"],
+    filterKey: "Newtown",
   },
   {
     id: "rajarhat",
@@ -39,9 +42,9 @@ const NEIGHBOURHOODS: Neighbourhood[] = [
       "Rapidly appreciating corridor connecting Salt Lake and Newtown to the Airport. Favored for sprawling gated complexes with extensive landscaped clubhouses.",
     connectivity: ["Direct 6-Lane Expressway", "10 Mins to Airport", "Chinar Park Commercial Hub"],
     propertyTypes: "Gated Condominiums, Garden Residences & Commercial Frontage",
-    listingCount: "12+ Verified Listings",
     imageSrc: HOMEPAGE_IMAGES.terraceViewMaster,
     highlights: ["High Rental Yield", "Close to Chinar Park", "Comprehensive Sports Clubhouses"],
+    filterKey: "Rajarhat",
   },
   {
     id: "salt-lake",
@@ -51,9 +54,9 @@ const NEIGHBOURHOODS: Neighbourhood[] = [
       "Kolkata’s original planned satellite city known for lush residential blocks, central parks, and eastern India’s primary IT and financial employment center.",
     connectivity: ["East-West Metro Corridor", "Direct E.M. Bypass Access", "Sector V Tech Center"],
     propertyTypes: "Independent Houses, Corporate Apartments & Office Floors",
-    listingCount: "8+ Verified Listings",
     imageSrc: HOMEPAGE_IMAGES.livingRoomMaster,
     highlights: ["Metro Connected", "Established Social Infrastructure", "Lush Block Parks"],
+    filterKey: "Salt Lake",
   },
   {
     id: "alipore",
@@ -63,9 +66,9 @@ const NEIGHBOURHOODS: Neighbourhood[] = [
       "Kolkata’s most prestigious residential address, home to stately bungalows, lush tree-lined avenues, elite social clubs, and super-luxury standalone towers.",
     connectivity: ["Central Kolkata Access", "Premier Healthcare Corridor", "Calcutta South Club"],
     propertyTypes: "Ultra-Luxury Penthouses, Bespoke Floors & Heritage Residences",
-    listingCount: "4+ Verified Listings",
     imageSrc: HOMEPAGE_IMAGES.masterBedroomMaster,
     highlights: ["Supreme Prestige", "High Privacy & Security", "Zero Industrial Congestion"],
+    filterKey: "Alipore",
   },
   {
     id: "ballygunge",
@@ -75,21 +78,21 @@ const NEIGHBOURHOODS: Neighbourhood[] = [
       "Classic South Kolkata charm paired with top educational institutions, premier shopping promenades, and boutique residential developments.",
     connectivity: ["Gariahat Road Connectivity", "Hazra & Southern Avenue Arteries", "Top Schools Proximity"],
     propertyTypes: "Large 4BHK Flats, Boutique Apartments & Penthouses",
-    listingCount: "5+ Verified Listings",
     imageSrc: HOMEPAGE_IMAGES.eveningExteriorMaster,
     highlights: ["Premier Schools & Colleges", "Renowned Dining Enclaves", "Walkable Neighborhood"],
+    filterKey: "Ballygunge",
   },
   {
-    id: "howrah",
-    name: "Howrah & Hooghly",
-    tagline: "Connected Waterfront & Industrial Growth",
+    id: "dum-dum",
+    name: "Dum Dum",
+    tagline: "Connected North Hub · Airport & Metro Corridor",
     character:
-      "Expanding western gateway featuring modern high-rise riverside townships, excellent bridge and highway connectivity, and competitive price points.",
-    connectivity: ["Kona Expressway", "Howrah Railway Hub", "Kolkata Riverfront"],
-    propertyTypes: "Riverside High-Rises, Modern 2/3 BHK Flats & Industrial Parcels",
-    listingCount: "7+ Verified Listings",
+      "Kolkata’s bustling northern gateway and transit nucleus, offering seamless multi-modal connectivity via Metro and Eastern Railway, VIP Road expressway artery, and 10 minutes to NSCBI Airport.",
+    connectivity: ["Dum Dum Metro & Railway Interchange", "Direct VIP Road & Jessore Road Arteries", "10 Mins to International Airport"],
+    propertyTypes: "Transit High-Rises, Modern 2/3 BHK Gated Flats & Resale Homes",
     imageSrc: HOMEPAGE_IMAGES.exteriorMaster,
-    highlights: ["Waterfront Views", "Expressway Transit", "Rapid Infrastructure Upgrades"],
+    highlights: ["Metro & Rail Transit Hub", "VIP Road Arterial Hub", "High Rental Demand Corridor"],
+    filterKey: "Dum Dum",
   },
   {
     id: "joka",
@@ -99,15 +102,39 @@ const NEIGHBOURHOODS: Neighbourhood[] = [
       "High-potential southern suburban corridor anchored by the Purple Line Metro, IIM Calcutta, and expansive integrated residential townships.",
     connectivity: ["Purple Line Metro", "Diamond Harbour Road", "Southern Bypass"],
     propertyTypes: "Affordable & Mid-Luxury Apartments, Gated Enclaves & Residential Plots",
-    listingCount: "8+ Verified Listings",
     imageSrc: HOMEPAGE_IMAGES.terraceViewMaster,
     highlights: ["Metro Connectivity", "IIM Calcutta Proximity", "Affordable Entry Pricing"],
+    filterKey: "Joka",
   },
 ];
 
 export default function InteractiveLocationsSection() {
   const [activeId, setActiveId] = useState<string>("newtown");
+  const [properties, setProperties] = useState<PropertyListing[]>(PROPERTY_LISTINGS);
+
+  // Automatically sync with live data store so project additions / removals reflect dynamically
+  useEffect(() => {
+    fetchLiveProperties().then((data) => {
+      if (data && data.length > 0) {
+        setProperties(data);
+      }
+    });
+  }, []);
+
   const activeArea = NEIGHBOURHOODS.find((n) => n.id === activeId) || NEIGHBOURHOODS[0];
+
+  // Dynamically calculate exact number of properties present in the catalog for any neighbourhood
+  const getLocationCount = (filterKey: string) => {
+    return properties.filter((p) =>
+      p.location.toLowerCase().includes(filterKey.toLowerCase())
+    ).length;
+  };
+
+  // Dynamic property filter for the currently active location
+  const matchingProperties: PropertyListing[] = properties.filter((p) =>
+    p.location.toLowerCase().includes(activeArea.filterKey.toLowerCase())
+  );
+  const activeCount = matchingProperties.length;
 
   return (
     <section
@@ -134,22 +161,30 @@ export default function InteractiveLocationsSection() {
             </span>
           </h2>
           <p className="text-subhead text-[var(--color-stone-600)] font-light leading-relaxed">
-            Every micro-market in Kolkata has its own civic authority, price trajectory, and living culture. Select a neighborhood below to explore its character and available opportunities.
+            Every micro-market in Kolkata has its own civic authority, price trajectory, and living culture. Select a neighborhood below to sort and preview available verified properties in that location.
           </p>
         </div>
 
         {/* Interactive Experience Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-          {/* Left Column: Neighbourhood Selector List */}
+          {/* Left Column: Neighbourhood Selector List (Acts as instant sort/filter) */}
           <div className="lg:col-span-5 space-y-2">
+            <div className="flex items-center justify-between pb-2 px-1 text-[11px] text-[var(--color-stone-500)] uppercase tracking-wider font-semibold">
+              <span>Select Neighbourhood</span>
+              <span>Available Inventory</span>
+            </div>
+
             {NEIGHBOURHOODS.map((item) => {
               const isSelected = item.id === activeId;
+              const count = getLocationCount(item.filterKey);
+
               return (
                 <button
                   key={item.id}
                   type="button"
                   onClick={() => setActiveId(item.id)}
                   onMouseEnter={() => setActiveId(item.id)}
+                  aria-pressed={isSelected}
                   className={`w-full text-left p-4 sm:p-5 rounded-[3px] border transition-all duration-300 flex items-center justify-between cursor-pointer ${
                     isSelected
                       ? "bg-white border-[var(--color-gold-400)] shadow-md translate-x-1"
@@ -158,14 +193,14 @@ export default function InteractiveLocationsSection() {
                 >
                   <div className="flex items-center gap-3.5">
                     <div
-                      className={`w-2 h-2 rounded-full transition-colors ${
-                        isSelected ? "bg-[var(--color-gold-400)]" : "bg-[var(--color-stone-300)]"
+                      className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                        isSelected ? "bg-[var(--color-gold-500)] ring-4 ring-[var(--color-gold-100)]" : "bg-[var(--color-stone-300)]"
                       }`}
                     />
                     <div>
                       <h3
                         className={`text-base font-medium transition-colors ${
-                          isSelected ? "text-[var(--color-navy-900)]" : "text-[var(--color-stone-800)]"
+                          isSelected ? "text-[var(--color-navy-900)] font-semibold" : "text-[var(--color-stone-800)]"
                         }`}
                       >
                         {item.name}
@@ -177,20 +212,21 @@ export default function InteractiveLocationsSection() {
                   </div>
 
                   <span
-                    className={`text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-[2px] transition-colors ${
+                    className={`text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 rounded-[2px] transition-colors whitespace-nowrap flex items-center gap-1 ${
                       isSelected
-                        ? "bg-[var(--color-navy-900)] text-white"
+                        ? "bg-[var(--color-navy-900)] text-white shadow-xs"
                         : "bg-[var(--color-stone-200)] text-[var(--color-stone-600)]"
                     }`}
                   >
-                    {item.listingCount}
+                    <AnimatedCounter target={count} duration={800} />
+                    <span>{count === 1 ? "Property" : "Properties"}</span>
                   </span>
                 </button>
               );
             })}
           </div>
 
-          {/* Right Column: Dynamic Preview Display */}
+          {/* Right Column: Dynamic Preview Display with Live Property Cards */}
           <div className="lg:col-span-7 bg-white rounded-[3px] border border-[var(--color-stone-300)] shadow-lg overflow-hidden transition-all duration-400">
             {/* Neighborhood Visual Frame */}
             <div className="relative aspect-[16/9] w-full bg-[var(--color-stone-900)] overflow-hidden">
@@ -202,7 +238,7 @@ export default function InteractiveLocationsSection() {
                 sizes="(max-width: 1024px) 100vw, 55vw"
                 className="object-cover object-center transition-all duration-700 ease-out"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent pointer-events-none" />
 
               <div className="absolute bottom-5 left-6 right-6 flex items-end justify-between text-white">
                 <div>
@@ -213,14 +249,15 @@ export default function InteractiveLocationsSection() {
                     {activeArea.name}
                   </h3>
                 </div>
-                <span className="px-3 py-1 bg-black/60 backdrop-blur-sm border border-white/20 text-[10px] uppercase tracking-wider text-white/90 rounded-[2px]">
-                  {activeArea.listingCount}
+                <span className="px-3 py-1 bg-black/60 backdrop-blur-sm border border-white/20 text-[10px] uppercase tracking-wider text-white/90 rounded-[2px] flex items-center gap-1.5 font-medium">
+                  <AnimatedCounter target={activeCount} duration={800} />
+                  <span>{activeCount === 1 ? "Property Listed" : "Properties Listed"}</span>
                 </span>
               </div>
             </div>
 
             {/* Neighborhood Data & Highlights */}
-            <div className="p-7 sm:p-9 space-y-6">
+            <div className="p-6 sm:p-8 space-y-6">
               <div>
                 <p className="text-xs uppercase tracking-wider text-[var(--color-gold-500)] font-semibold mb-2">
                   {activeArea.tagline}
@@ -236,10 +273,10 @@ export default function InteractiveLocationsSection() {
                   <span className="text-[10px] uppercase tracking-wider text-[var(--color-stone-400)] block mb-1 font-semibold">
                     Transit & Access
                   </span>
-                  <ul className="space-y-1 text-[var(--color-stone-700)] font-light">
+                  <ul className="space-y-1.5 text-[var(--color-stone-700)] font-light">
                     {activeArea.connectivity.map((item, idx) => (
                       <li key={idx} className="flex items-center gap-1.5">
-                        <span className="w-1 h-1 rounded-full bg-[var(--color-gold-400)]" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-gold-400)] flex-shrink-0" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -250,10 +287,10 @@ export default function InteractiveLocationsSection() {
                   <span className="text-[10px] uppercase tracking-wider text-[var(--color-stone-400)] block mb-1 font-semibold">
                     Key Highlights
                   </span>
-                  <ul className="space-y-1 text-[var(--color-stone-700)] font-light">
+                  <ul className="space-y-1.5 text-[var(--color-stone-700)] font-light">
                     {activeArea.highlights.map((item, idx) => (
                       <li key={idx} className="flex items-center gap-1.5">
-                        <span className="w-1 h-1 rounded-full bg-emerald-500" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -261,18 +298,96 @@ export default function InteractiveLocationsSection() {
                 </div>
               </div>
 
+              {/* DYNAMIC PROPERTY LISTING: Displays matching properties for this location */}
+              <div className="pt-5 border-t border-[var(--color-stone-200)]">
+                <div className="flex items-center justify-between mb-3.5">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[var(--color-gold-500)] animate-pulse" />
+                    <h4 className="text-xs uppercase tracking-wider font-semibold text-[var(--color-stone-900)] flex items-center gap-1.5">
+                      <span>Available Properties in {activeArea.name}</span>
+                      <span className="text-[var(--color-gold-600)] font-bold">
+                        (<AnimatedCounter target={activeCount} duration={600} />)
+                      </span>
+                    </h4>
+                  </div>
+                  <Link
+                    href={`/properties?location=${encodeURIComponent(activeArea.filterKey)}`}
+                    className="text-[11px] font-medium text-[var(--color-gold-600)] hover:text-[var(--color-navy-900)] flex items-center gap-1 transition-colors"
+                  >
+                    <span>Sort all in catalog</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </Link>
+                </div>
+
+                {matchingProperties.length > 0 ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {matchingProperties.slice(0, 2).map((property) => (
+                      <Link
+                        key={property.id}
+                        href={`/properties/${property.slug}`}
+                        className="group flex gap-3 p-2.5 rounded-[3px] border border-[var(--color-stone-200)] hover:border-[var(--color-gold-400)] bg-[var(--surface-canvas-alt)] hover:bg-white transition-all shadow-xs hover:shadow-sm"
+                      >
+                        <div className="relative w-20 h-20 rounded-[2px] overflow-hidden flex-shrink-0 bg-stone-200">
+                          <Image
+                            src={property.imageSrc}
+                            alt={property.title}
+                            fill
+                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                            sizes="80px"
+                          />
+                        </div>
+                        <div className="flex flex-col justify-between min-w-0 flex-1 py-0.5">
+                          <div>
+                            <div className="flex items-center gap-1.5 mb-1">
+                              <span className="text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded-[2px] bg-white border border-stone-200 text-stone-600 font-medium">
+                                {property.developer || "Developer"}
+                              </span>
+                              <span className="text-[9px] text-stone-400 font-light truncate">
+                                {property.bedrooms ? `${property.bedrooms} BHK` : property.type}
+                              </span>
+                            </div>
+                            <h5 className="text-xs font-medium text-[var(--color-stone-900)] truncate group-hover:text-[var(--color-gold-600)] transition-colors">
+                              {property.title}
+                            </h5>
+                          </div>
+                          <div className="flex items-baseline justify-between mt-1">
+                            <span className="font-sans text-sm font-semibold text-[var(--color-navy-900)] tracking-tight">
+                              {property.price}
+                            </span>
+                            <span className="text-[10px] text-stone-400 font-light">
+                              {property.areaSqft} sq.ft
+                            </span>
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-xs text-[var(--color-stone-500)] italic">
+                    Properties for this micro-market are currently being updated in our portfolio.
+                  </p>
+                )}
+              </div>
+
               {/* Action Bar */}
               <div className="pt-5 border-t border-[var(--color-stone-200)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                  <span className="text-[10px] text-[var(--color-stone-400)] uppercase block">Primary Typologies</span>
-                  <span className="text-xs font-medium text-[var(--color-stone-800)]">{activeArea.propertyTypes}</span>
+                  <span className="text-[10px] text-[var(--color-stone-400)] uppercase block font-semibold">
+                    Primary Typologies
+                  </span>
+                  <span className="text-xs font-medium text-[var(--color-stone-800)]">
+                    {activeArea.propertyTypes}
+                  </span>
                 </div>
 
                 <Link
-                  href={`/properties?location=${encodeURIComponent(activeArea.name)}`}
-                  className="btn-editorial-gold text-xs py-2 px-5 whitespace-nowrap self-stretch sm:self-auto text-center"
+                  href={`/properties?location=${encodeURIComponent(activeArea.filterKey)}`}
+                  className="btn-editorial-gold text-xs py-2.5 px-5 whitespace-nowrap self-stretch sm:self-auto text-center flex items-center justify-center gap-2"
                 >
-                  <span>Explore {activeArea.name} Properties</span>
+                  <span>Explore All {activeArea.name} Properties</span>
+                  <span className="px-1.5 py-0.5 bg-black/20 rounded text-[10px] font-semibold">
+                    <AnimatedCounter target={activeCount} duration={600} />
+                  </span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
@@ -283,3 +398,4 @@ export default function InteractiveLocationsSection() {
     </section>
   );
 }
+

@@ -844,7 +844,7 @@ export default function AdminPage() {
                             </td>
 
                             {/* Price */}
-                            <td className="p-3.5 font-editorial font-medium text-stone-900 whitespace-nowrap">
+                            <td className="p-3.5 font-medium text-stone-900 whitespace-nowrap">
                               {prop.price || "On Request"}
                             </td>
 

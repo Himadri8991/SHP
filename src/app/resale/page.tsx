@@ -423,7 +423,7 @@ export default function ResalePage() {
                           <p className="text-[10px] uppercase tracking-wider text-[var(--color-stone-400)] font-medium">
                             Expected Price
                           </p>
-                          <p className="text-lg font-editorial italic font-normal text-[var(--color-stone-900)]">
+                          <p className="text-lg font-semibold tracking-tight text-[var(--color-navy-900)]">
                             {prop.price || "On Request"}
                           </p>
                         </div>

@@ -75,7 +75,7 @@ export default async function PropertyDetailPage({ params }: Props) {
               <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                 <div className="text-left sm:text-right">
                   <p className="text-xs uppercase tracking-wider text-[var(--color-stone-400)]">Offered At</p>
-                  <p className="text-2xl sm:text-3xl font-editorial italic font-normal text-[var(--color-stone-900)]">
+                  <p className="text-2xl sm:text-3xl font-semibold tracking-tight text-[var(--color-navy-900)]">
                     {property.price || "Contact for Price"}
                   </p>
                 </div>

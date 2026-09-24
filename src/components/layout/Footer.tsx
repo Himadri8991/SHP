@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import { SITE_CONFIG } from "@/data/site-config";
-import { Phone, Mail, MapPin, ArrowRight, MessageSquare } from "lucide-react";
+import { ArrowRight, MessageSquare } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -60,6 +60,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/properties/commercial" className="hover:text-white transition-colors">
+                  Commercial Spaces
+                </Link>
+              </li>
+              <li>
                 <Link href="/properties/rent" className="hover:text-white transition-colors">
                   Rent & Lease
                 </Link>
@@ -69,11 +74,11 @@ export default function Footer() {
                   Land & Plots
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link href="/properties/ps-one10-signature-tower-newtown" className="hover:text-[var(--color-gold-300)] transition-colors">
                   PS One10 — Signature Tower
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
 
@@ -113,11 +118,11 @@ export default function Footer() {
                   Terms of Service
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link href="/admin" className="hover:text-[var(--color-gold-300)] transition-colors">
                   Admin Portal
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
 

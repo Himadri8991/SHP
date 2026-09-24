@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, MessageSquare, Phone, Building2, Key, Home, Trees, PlusCircle } from "lucide-react";
+import { ChevronDown, MessageSquare, Phone, Building2, Building, Key, Home, Trees, PlusCircle } from "lucide-react";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import { SITE_CONFIG } from "@/data/site-config";
 import ListPropertyModal from "@/components/properties/ListPropertyModal";
@@ -103,6 +103,7 @@ export default function Navigation() {
     { title: "All Properties", href: "/properties", desc: "Complete developer & resale catalog", icon: Home },
     { title: "New Projects", href: "/properties/new-projects", desc: "Srijan, PS Group, Godrej, Shapoorji & more", icon: Building2 },
     { title: "Resale Flats", href: "/resale", desc: "Verified ready-to-move secondary market flats", icon: Key },
+    { title: "Commercial Spaces", href: "/properties/commercial", desc: "Corporate offices, IT hubs & retail showrooms", icon: Building },
     { title: "Rent & Lease", href: "/properties/rent", desc: "Luxury executive residences & corporate leases", icon: Home },
     { title: "Land / Plot", href: "/properties/land-plots", desc: "Freehold residential & commercial plots", icon: Trees },
   ];

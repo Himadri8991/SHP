@@ -87,7 +87,7 @@ export default function CategoryPage() {
                   <div className="p-6 pt-0 flex items-center justify-between border-t border-[var(--color-stone-100)]">
                     <div>
                       <p className="text-[10px] uppercase tracking-wider text-[var(--color-stone-400)] font-medium">Pricing</p>
-                      <p className="text-lg font-editorial italic font-normal text-[var(--color-stone-900)]">
+                      <p className="text-lg font-semibold tracking-tight text-[var(--color-navy-900)]">
                         {prop.price || "On Request"}
                       </p>
                     </div>

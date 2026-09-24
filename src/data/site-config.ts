@@ -96,7 +96,7 @@ export const SITE_CONFIG = {
     { name: "Rajarhat Expressway", count: "12+ Listings", desc: "Rapid appreciation, gated communities, airport access" },
     { name: "Salt Lake (Bidhannagar)", count: "8+ Listings", desc: "Established greenery, corporate sectors, metro connectivity" },
     { name: "Alipore & Ballygunge", count: "6+ Listings", desc: "Prestigious South Kolkata enclaves and luxury residences" },
-    { name: "Howrah & Hooghly", count: "7+ Listings", desc: "Emerging commercial hubs and connected residential complexes" },
+    { name: "Dum Dum & VIP Corridor", count: "7+ Listings", desc: "Airport connectivity, metro transit, and established residential enclaves" },
     { name: "Joka & Southern Bypass", count: "8+ Listings", desc: "Expanding metro corridor, modern townships, and gated projects" },
     { name: "E.M. Bypass Enclaves", count: "6+ Listings", desc: "High-rise towers, premium lifestyle, and healthcare access" },
   ],

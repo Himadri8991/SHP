@@ -38,6 +38,7 @@ export default function OpeningPreloader() {
           setTimeout(() => {
             setIsVisible(false);
             document.body.style.overflow = "";
+            window.scrollTo(0, 0);
           }, 1000);
         }, 200);
       }

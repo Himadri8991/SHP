@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Bed, Bath, Maximize2, ShieldCheck, ArrowRight, MessageSquare, MapPin } from "lucide-react";
+import { ShieldCheck, ArrowRight, MessageSquare, MapPin } from "lucide-react";
 import { PROPERTY_LISTINGS } from "@/data/properties";
 import { SITE_CONFIG } from "@/data/site-config";
 
@@ -94,7 +94,7 @@ export default function FeaturedPropertiesSection() {
                     </Link>
                   </h3>
 
-                  <div className="text-2xl sm:text-3xl font-light text-[var(--color-navy-900)] mb-4 font-editorial">
+                  <div className="text-2xl sm:text-4xl font-sans font-semibold tracking-tight text-[var(--color-navy-900)] mb-4">
                     {flagship.price}
                   </div>
 

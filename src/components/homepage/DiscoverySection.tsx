@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Search, MapPin, Building2, SlidersHorizontal, ArrowRight, Check } from "lucide-react";
+import { Search, ArrowRight, Check } from "lucide-react";
 
-type Intent = "buy" | "rent" | "resale" | "invest" | "sell";
+type Intent = "buy" | "rent" | "resale" | "commercial" | "invest" | "sell";
 
 export default function DiscoverySection() {
   const router = useRouter();
@@ -17,6 +17,7 @@ export default function DiscoverySection() {
     { id: "buy", label: "Buy" },
     { id: "rent", label: "Rent" },
     { id: "resale", label: "Resale" },
+    { id: "commercial", label: "Commercial" },
     { id: "sell", label: "List / Sell" },
   ] as const;
 
@@ -60,6 +61,7 @@ export default function DiscoverySection() {
     const params = new URLSearchParams();
     if (intent === "rent") params.set("purpose", "rent");
     else if (intent === "resale") params.set("category", "resale");
+    else if (intent === "commercial") params.set("type", "commercial");
 
     if (selectedType !== "all") params.set("category", selectedType);
     if (selectedDeveloper !== "all") params.set("developer", selectedDeveloper);
