@@ -34,8 +34,8 @@ export const SITE_CONFIG = {
   contact: {
     phonePrimary: "+91 62915 85255",
     phoneSecondary: "+91 78903 60636",
-    email: "we@skyhighinteriorandproperties.com",
-    website: "skyhighinteriorandproperties.com",
+    email: "we@skyhighpropertiess.com",
+    website: "skyhighpropertiess.com",
     whatsapp: "916291585255",
   },
 
@@ -140,7 +140,7 @@ export const SITE_CONFIG = {
       "Find your next address with Sky-High Properties. Curated residential duplexes, villas, apartments, and commercial properties across Newtown, Rajarhat, and Kolkata.",
     siteName: "Sky-High Properties",
     locale: "en_IN",
-    url: "https://skyhighinteriorandproperties.com",
+    url: "https://skyhighpropertiess.com",
   },
 
   /** Social handles */
